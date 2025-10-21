@@ -1,0 +1,55 @@
+<div class="container exam-results py-4">
+  @if (accountService.isLoggedIn()) {
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title mb-0">Exam Results</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table exam-table">
+        <thead>
+          <tr>
+            <th>Exam Name</th>
+            <th class="text-center">Score</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (exam of completedExams; track exam) {
+            <tr [class.passed-row]="exam.isPassed" [class.failed-row]="!exam.isPassed">
+              <td class="exam-name">{{ exam.examName }}</td>
+              <td class="text-center score-cell">
+                <span class="score">{{ exam.totalScore }}</span>
+                <span class="divider">%</span>
+                <span class="max-score">{{ exam.maxMarks }}</span>
+              </td>
+              <td class="text-center">
+                <span class="status-badge" [class.passed]="exam.isPassed" [class.failed]="!exam.isPassed">
+                  {{ exam.isPassed ? 'Passed' : 'Failed' }}
+                </span>
+              </td>
+
+              <td class="text-center">
+                <button class="details-btn" (click)="openCompletedExam(exam.examId)">
+                  View Details
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="auth-prompt">
+      <div class="lock-icon">
+        <i class="bi bi-lock-fill"></i>
+      </div>
+      <h3>Access Your Exam Results</h3>
+      <p>Sign in to view your complete examination history</p>
+      <a routerLink="/account/login" class="auth-button">
+        Sign In <i class="bi bi-arrow-right ms-2"></i>
+      </a>
+    </div>
+  }
+</div>

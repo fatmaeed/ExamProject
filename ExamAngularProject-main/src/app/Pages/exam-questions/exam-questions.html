@@ -1,0 +1,73 @@
+@if (isExamLoaded && isQuestionsLoaded) {
+<div class="container-lg exam-questions-container py-4">
+  <div class="exam-header text-center mb-4">
+    <h1 class="exam-title mb-2">{{ examInfoModel.name | uppercase }} - EXAM</h1>
+    <p class="exam-dates text-muted mb-4 text-white">
+      <i class="fas fa-calendar-alt me-2"></i>
+      {{ examInfoModel.startTime | date:'dd, MMM | HH:mm a' }} -
+      {{ examInfoModel.endTime | date:'dd, MMM | HH:mm a' }}
+    </p>
+    <button class="btn btn-primary btn-add-question" [routerLink]="['create']">
+      <i class="fas fa-plus-circle me-2"></i> Add New Question
+    </button>
+  </div>
+
+  <div class="row stats-row mb-4">
+    <div class="col-md-3 col-6 mb-3">
+      <div class="card stat-card h-100">
+        <div class="card-body text-center">
+          <div class="stat-number text-primary">{{ examInfoModel.numberOfQuestions }}</div>
+          <div class="stat-label">Total Questions</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+      <div class="card stat-card h-100">
+        <div class="card-body text-center">
+          <div class="stat-number text-success">{{ examInfoModel.totalScore }}</div>
+          <div class="stat-label">Total Points</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+      <div class="card stat-card h-100">
+        <div class="card-body text-center">
+          <div class="stat-number text-warning">{{ examInfoModel.maxDegree }}</div>
+          <div class="stat-label">Max Degree</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+      <div class="card stat-card h-100">
+        <div class="card-body text-center">
+          <div class="stat-number text-danger">{{ examInfoModel.maxDegree - examInfoModel.totalScore }}</div>
+          <div class="stat-label">Remaining Points</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 ">
+    <app-search-bar (searchEvent)="searchAboutQuestion($event)"></app-search-bar>
+  </div>
+  <div class="mb-4">
+    <app-questions-list
+      (deleteQuestion)="removeQuestionFromList($event)"
+      [page]="selectedPage"
+      [displayedQuestions]="currentQuestions">
+    </app-questions-list>
+  </div>
+
+  @if(!(currentQuestions.length <= 0 && selectedPage === 1)) {
+  <div class="d-flex justify-content-center">
+    <app-pagination-bar
+      [selectedPage]="selectedPage"
+      [pages]="pages"
+      (pageChange)="changePage($event)">
+    </app-pagination-bar>
+  </div>
+  }
+</div>
+} @else {
+<app-loading-spinner></app-loading-spinner>
+}

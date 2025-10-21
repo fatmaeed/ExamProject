@@ -1,0 +1,120 @@
+<div class="exam-dashboard-container">
+  <div class="action-bar mb-4 mt-0">
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <button class="btn btn-primary btn-add-exam" [routerLink]="['/examform']">
+          <i class="bi bi-plus-circle-fill me-2"></i> Add New Exam
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div class="search-box input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="bi bi-search text-muted"></i>
+          </span>
+          <input type="text" class="form-control border-start-0" placeholder="Search exams..."
+                 (input)="Search()" [(ngModel)]="searchKeyword">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (exams.length === 0 || null) {
+  <div class="no-exams-container text-center py-5">
+    <div class="no-exams-icon mb-3">
+      <i class="bi bi-journal-x"></i>
+    </div>
+    <h3 class="no-exams-title mb-2">No Exams Found</h3>
+    <p class="no-exams-message text-muted">
+      There are currently no exams available that match your search criteria.
+    </p>
+  </div>
+  }
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @for (exam of exams; track exam.id) {
+    <div class="col">
+      <div class="exam-card card h-100 border-0 shadow-sm">
+        <div class="card-header" >
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0 text-white">{{exam.name}}</h5>
+            <span class="badge bg-white text-dark">{{exam.duration}} hour</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-6">
+              <div class="degree-info max-degree">
+                <i class="bi bi-arrow-up-circle-fill"></i>
+                <div>
+                  <small class="text-muted">Max Degree</small>
+                  <h6 class="mb-0">{{exam.maxDegree}}</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="degree-info min-degree">
+                <i class="bi bi-arrow-down-circle-fill"></i>
+                <div>
+                  <small class="text-muted">Min Degree</small>
+                  <h6 class="mb-0">{{exam.minDegree}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="time-info start-time">
+                <i class="bi bi-clock-fill"></i>
+                <div>
+                  <small class="text-muted">Start Time</small>
+                  <h6 class="mb-0">{{exam.startTime | date:"dd MMM yyyy"}}</h6>
+                  <h6 class="mb-0">{{exam.startTime | date:"hh:mm a"}}</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="time-info end-time">
+                <i class="bi bi-clock-history"></i>
+                <div>
+                  <small class="text-muted">End Time</small>
+                  <h6 class="mb-0">{{exam.endTime | date:"dd MMM yyyy"}}</h6>
+                  <h6 class="mb-0">{{exam.endTime | date:"hh:mm a"}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer bg-transparent border-top-0 pt-0">
+          <div class="d-flex justify-content-between">
+            @if(isEnded(exam.endTime)) {
+              <button class="btn btn-outline-danger btn-sm btn-delete" (click)="deleteExam(exam.id)">
+                <i class="bi bi-trash-fill me-1"></i> Delete
+              </button>
+              <button class="btn btn-primary btn-sm shadow-sm btn-detail" [routerLink]="['/exam', exam.id, 'questions']">
+                <i class="bi bi-file-text me-1"></i> Details
+              </button>
+              <button class="btn btn-primary btn-sm btn-report" [routerLink]="['/exam', exam.id, 'report']">
+                <i class="bi bi-file-text me-1"></i> Report
+              </button>
+
+            } @else {
+              <button class="btn btn-outline-danger btn-sm btn-delete" (click)="deleteExam(exam.id)">
+                <i class="bi bi-trash-fill me-1"></i> Delete
+              </button>
+              <button class="btn btn-outline-secondary btn-sm btn-edit" [routerLink]="['/examform', exam.id]">
+                <i class="bi bi-pencil-fill me-1"></i> Edit
+              </button>
+              <button class="btn btn-primary btn-sm btn-questions" [routerLink]="['/exam', exam.id, 'questions']">
+                <i class="bi bi-list-check me-1"></i> Questions
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

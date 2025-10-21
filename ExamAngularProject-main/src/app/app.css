@@ -1,0 +1,9 @@
+.content-area {
+  margin-top: 0;
+  margin-left: 270px;
+}
+.not-found-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  text-align: center;
+}

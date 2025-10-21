@@ -1,0 +1,30 @@
+.btn-outline-account {
+  background-color: transparent;
+  color: #107a79;
+  border: 2px solid #107a79;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  margin: 10px auto;
+}
+
+.btn-outline-account:hover {
+  background-color: #107a79;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(16, 122, 121, 0.3);
+}
+
+.btn-outline-account:active {
+  background-color: #0c5f5e;
+  border-color: #0c5f5e;
+}
+
+/* .bg-account {
+  background-color: #0c5f5e;
+} */
+
+.text-account-color {
+  color: #107a79;
+  ;
+}

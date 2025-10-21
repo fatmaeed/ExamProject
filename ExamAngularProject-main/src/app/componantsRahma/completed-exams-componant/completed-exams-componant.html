@@ -1,0 +1,22 @@
+<div class="container mt-4" *ngIf="exam">
+  <h2>{{ exam.examName }} - Score: {{ exam.totalScore }}/{{ exam.maxMarks }}</h2>
+  <p [ngClass]="{ 'text-success': exam.isPassed, 'text-danger': !exam.isPassed }">
+    {{ exam.isPassed ? 'Passed ✅' : 'Failed ❌' }}
+  </p>
+
+  <div *ngFor="let q of exam.questions" class="card mb-3">
+    <div class="card-body">
+      <h5>{{ q.questionText }}</h5>
+      <ul>
+        <li>1. {{ q.choice1 }}</li>
+        <li>2. {{ q.choice2 }}</li>
+        <li>3. {{ q.choice3 }}</li>
+        <li>4. {{ q.choice4 }}</li>
+      </ul>
+      <p><strong>Correct Answer:</strong> {{ q.correctAnswer }}</p>
+      <p [ngClass]="{ 'text-success': q.isCorrect, 'text-danger': !q.isCorrect }">
+        Your Score: {{ q.answerScore }} ({{ q.isCorrect ? 'Correct' : 'Wrong' }})
+      </p>
+    </div>
+  </div>
+</div>

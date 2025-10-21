@@ -1,0 +1,155 @@
+
+    <div class="row  justify-content-center">
+      <div class="col-lg-auto">
+        <div class="exam-form-card">
+          <div class="form-header gradient-header">
+            <div class="header-content">
+              <h2 class="form-title">
+                <i class="bi bi-journal-plus me-2"></i>
+                {{examId == null ? "Create New Exam" : "Edit Exam"}}
+              </h2>
+              <p class="form-subtitle">Fill in the exam details below</p>
+            </div>
+          </div>
+          <div class="form-body">
+            <form id="examForm" [formGroup]="examForm" (submit)="saveExam()">
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="examTitle" class="form-label">Exam Title *</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-pen"></i>
+                    </span>
+                    <input type="text" class="form-control" id="examTitle"
+                          formControlName="title" placeholder="Enter exam title">
+                  </div>
+                  @if(getTitle.touched) {
+                    @if(getTitle.hasError('required')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Exam title is required
+                    </div>
+                    }
+                    @if(getTitle.hasError('minlength')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Title must be at least 3 characters
+                    </div>
+                    }
+                  }
+                </div>
+                <div class="col-md-6 mb-4" formGroupName="duration">
+                  <label class="form-label">Duration *</label>
+                  <div class="duration-input-group">
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-clock-history"></i>
+                      </span>
+                      <input type="number" class="form-control" id="durationHours"
+                            min="0" max="3" placeholder="HH" formControlName="hours">
+                      <span class="input-group-text">:</span>
+                      <input type="number" class="form-control" id="durationMinutes"
+                            min="0" max="59" placeholder="MM" formControlName="minutes">
+                    </div>
+                    <div class="duration-badge">
+                      {{ getHours.value || '00' }}:{{ getMinutes.value || '00' }}:00
+                    </div>
+                  </div>
+                  @if(getDuration.touched) {
+                    @if(getHours.hasError('required')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Hours required
+                    </div>
+                    }
+                    @if(getHours.hasError('max')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Max 3 hours allowed
+                    </div>
+                    }
+                    @if(getMinutes.hasError('required')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Minutes required
+                    </div>
+                    }
+                    @if(getMinutes.hasError('min')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Minimum 0 minutes
+                    </div>
+                    }
+                    @if(getMinutes.hasError('max')) {
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i> Maximum 59 minutes
+                    </div>
+                    }
+                  }
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="minDegree" class="form-label">Minimum Degree *</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-arrow-down-circle"></i>
+                    </span>
+                    <input type="number" class="form-control" id="minDegree"
+                          formControlName="mindegree" placeholder="Enter minimum passing score">
+                  </div>
+                  @if(getMinDegree.touched && getMinDegree.hasError('required')) {
+                  <div class="invalid-feedback d-block">
+                    <i class="bi bi-exclamation-circle me-1"></i> Minimum degree required
+                  </div>
+                  }
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <label for="maxDegree" class="form-label">Maximum Degree *</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-arrow-up-circle"></i>
+                    </span>
+                    <input type="number" class="form-control" id="maxDegree"
+                          formControlName="maxdegree" placeholder="Enter maximum possible score">
+                  </div>
+                  @if(getMaxDegree.touched && getMaxDegree.hasError('required')) {
+                  <div class="invalid-feedback d-block">
+                    <i class="bi bi-exclamation-circle me-1"></i> Maximum degree required
+                  </div>
+                  }
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="startTime" class="form-label">Start Time *</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar-event"></i>
+                    </span>
+                    <input type="datetime-local" class="form-control" id="startTime" formControlName="starttime">
+                  </div>
+                  @if(getStartTime.touched && getStartTime.hasError('required')) {
+                  <div class="invalid-feedback d-block">
+                    <i class="bi bi-exclamation-circle me-1"></i> Start time required
+                  </div>
+                  }
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <label for="endTime" class="form-label">End Time *</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar-x"></i>
+                    </span>
+                    <input type="datetime-local" class="form-control" id="endTime" formControlName="endtime" readonly>
+                  </div>
+                  @if(getEndTime.touched && getEndTime.hasError('required')) {
+                  <div class="invalid-feedback d-block">
+                    <i class="bi bi-exclamation-circle me-1"></i> End time required
+                  </div>
+                  }
+                </div>
+              </div>
+              <div class="form-footer">
+                <button type="submit" class="btn btn-submit">
+                  <i class="bi bi-save me-2"></i>
+                  {{examId == null ? "Create Exam" : "Update Exam"}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>

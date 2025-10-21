@@ -1,0 +1,170 @@
+@if (isLoaded) {
+<div class="exam-report align-items-center">
+  <div class="report-header ">
+    <div class="header-content">
+      <h1 class="report-title">
+        <i class="fas fa-file-alt me-3"></i>
+        {{ exam.examName }} - Exam Report
+      </h1>
+      <div class="exam-meta-container">
+        <div class="meta-card">
+          <div class="meta-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="meta-content">
+            <span class="meta-label">Max Marks</span>
+            <span class="meta-value">{{ exam.maxMarks }}</span>
+          </div>
+        </div>
+
+        <div class="meta-card">
+          <div class="meta-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="meta-content">
+            <span class="meta-label">Passing Marks</span>
+            <span class="meta-value">{{ exam.minMarks }}</span>
+          </div>
+        </div>
+
+        <div class="meta-card">
+          <div class="meta-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="meta-content">
+            <span class="meta-label">Duration</span>
+            <span class="meta-value">{{ exam.duration }} mins</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="date-container">
+      <div class="date-card">
+        <div class="date-icon">
+          <i class="fas fa-calendar-day"></i>
+        </div>
+        <div class="date-content">
+          <span class="date-label">Start Date</span>
+          <span class="date-value">{{ exam.startDateTime | date:'medium' }}</span>
+        </div>
+      </div>
+
+      <div class="date-card">
+        <div class="date-icon">
+          <i class="fas fa-calendar-times"></i>
+        </div>
+        <div class="date-content">
+          <span class="date-label">End Date</span>
+          <span class="date-value">{{ exam.endDateTime | date:'medium' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-summary">
+    <h2 class="section-title">
+      <i class="fas fa-chart-bar me-2"></i>
+      Exam Statistics
+    </h2>
+
+    <div class="stats-grid">
+      <div class="stat-card total-students">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ exam.totalStudents }}</span>
+          <span class="stat-label">Total Students</span>
+        </div>
+      </div>
+
+      <div class="stat-card passed-students">
+        <div class="stat-icon">
+          <i class="fas fa-check-double"></i>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ exam.passedStudents }}</span>
+          <span class="stat-label">Passed</span>
+        </div>
+      </div>
+
+      <div class="stat-card failed-students">
+        <div class="stat-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ exam.failedStudents }}</span>
+          <span class="stat-label">Failed</span>
+        </div>
+      </div>
+
+      <div class="stat-card average-marks">
+        <div class="stat-icon">
+          <i class="fas fa-calculator"></i>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ exam.averageMarks }}</span>
+          <span class="stat-label">Average Marks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-table-section">
+    <h2 class="section-title">
+      <i class="fas fa-list-ol me-2"></i>
+      Student Results
+    </h2>
+
+    <div class="table-responsive">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Marks</th>
+            <th>Status</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (student of exam.students; track $index) {
+          <tr>
+            <td class="student-number">{{ $index + 1 }}</td>
+            <td class="student-name">{{ student.fullName }}</td>
+            <td class="student-marks">{{ student.marks }}</td>
+            <td class="student-status">
+              <span class="status-badge" [ngClass]="{
+                'passed': student.isPassed === true,
+                'failed': student.isPassed === false,
+                'unknown': student.isPassed === null
+              }">
+                @if(student.isPassed === true) {
+                  <i class="fas fa-check-circle me-1"></i> Passed
+                } @else if(student.isPassed === false) {
+                  <i class="fas fa-times-circle me-1"></i> Failed
+                } @else {
+                  <i class="fas fa-question-circle me-1"></i> N/A
+                }
+              </span>
+            </td>
+            <td class="student-percentage">{{ calculatePercentage(student.marks) }}%</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    <div class="footer-content">
+      <i class="fas fa-clock me-2"></i>
+      Report generated on {{ currentDate | date:'medium' }}
+    </div>
+  </div>
+</div>
+} @else {
+<app-loading-spinner></app-loading-spinner>
+}

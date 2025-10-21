@@ -1,0 +1,40 @@
+<div class="quiz-card position-relative p-4 rounded-4 h-100"
+     (click)="navigateToQuiz()"
+     style="cursor: pointer; border-left: 4px solid #1D4645; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(29, 70, 69, 0.1); transition: all 0.3s ease;">
+
+  <!-- Original icon wrapper with subtle enhancement -->
+  <div class="icon-wrapper bg-white shadow-sm" style="width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+    <img
+      (error)="onImgError($event)"
+      [alt]="quiz.examName + ' icon'"
+      width="32"
+      height="32"
+      class="img-fluid"
+      style="object-fit: contain;"
+    />
+  </div>
+
+  <!-- Title with better spacing -->
+  <h5 class="fw-bold mt-3 mb-2 text-truncate"
+      style="color: #1D4645; font-size: 1.1rem; min-height: 3rem;"
+      [title]="quiz.examName">
+    {{ quiz.examName }}
+  </h5>
+
+  <!-- Duration with icon -->
+  <p class="small mb-2" style="color: #6D7D8B;">
+    <i class="bi bi-clock" style="margin-right: 6px;"></i>
+    {{ quiz.duration }}
+  </p>
+
+  <!-- Question count with enhanced badge -->
+  <div class="d-flex align-items-center mt-auto">
+    <span class="badge rounded-pill me-2"
+          style="background: rgba(29, 70, 69, 0.1); color: #1D4645; font-weight: 500; padding: 4px 10px;">
+      {{ randomQuestionCount }} Questions
+    </span>
+  </div>
+
+  <!-- Hidden hover effect (doesn't affect logic) -->
+  <div class="hover-effect" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(29, 70, 69, 0.03); opacity: 0; transition: opacity 0.3s ease; pointer-events: none;"></div>
+</div>

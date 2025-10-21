@@ -1,0 +1,3 @@
+interface ICreateQuestionModel extends IBaseQuestionModel{
+    
+}

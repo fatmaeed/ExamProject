@@ -1,0 +1,14 @@
+<div class="questions-list">
+  @for (item of displayedQuestions; track $index) {
+  <app-question-card
+    (deleteQuestion)="removeQuestion($event)"
+    [questionModel]="item"
+    [index]="(page -1) * 10 + $index +1"
+  >
+  </app-question-card>
+  }@empty {
+  <app-empty-card
+    [emptyModel]="{title : 'No Questions Yet' , description : 'Start by adding your first MCQ exam question'}"
+  ></app-empty-card>
+  }
+</div>

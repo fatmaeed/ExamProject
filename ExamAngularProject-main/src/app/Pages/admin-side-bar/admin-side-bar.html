@@ -1,0 +1,34 @@
+<div class="sidebar-container d-flex flex-column flex-shrink-0 p-3 text-white">
+  <div class="sidebar-header text-center mb-4">
+    <div class="admin-avatar mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center">
+      <i class="fas fa-user-crown fs-4"></i>
+    </div>
+    <h4 class="admin-name mb-0 fw-normal">Welcome, {{ adminName }}</h4>
+    <hr class="sidebar-divider my-3">
+  </div>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item mb-2">
+      <button (click)="goToExamList()" class="nav-link text-white d-flex align-items-center">
+        <div class="menu-icon me-3 d-flex align-items-center justify-content-center">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+        <span class="menu-text">Exams</span>
+      </button>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer mt-auto pt-3 border-top ">
+    <button class="logout-btn btn d-flex align-items-center w-100" (click)="logout()">
+      <div class="logout-icon me-3 d-flex align-items-center justify-content-center">
+        <i class="fas fa-sign-out-alt"></i>
+      </div>
+      <span class="logout-text">Logout</span>
+    </button>
+     <button class="logout-btn btn d-flex align-items-center w-100 mt-2 " (click)="changePassword()">
+      <div class="logout-icon me-3 d-flex align-items-center justify-content-center">
+        <i class="fas fa-sign-out-alt"></i>
+      </div>
+      <span class="logout-text">Change Password</span>
+    </button>
+  </div>
+</div>

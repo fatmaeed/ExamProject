@@ -1,0 +1,182 @@
+<div class="quiz-game-container bg-primary min-vh-100 p-3 p-md-4">
+  <div class="quiz-content-wrapper mx-auto" style="max-width: 900px">
+    <div class="game-card bg-primary rounded-3 shadow-lg overflow-hidden">
+      <div class="game-header bg-primary p-3 p-md-4 position-relative">
+        <div class="header-content d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+          <h1 class="game-title fs-3 fw-bold mb-0 d-flex align-items-center text-white">
+            <i class="fas fa-dragon me-2 text-warning"></i>QUIZ ADVENTURE
+          </h1>
+          <div class="header-controls d-flex gap-3 gap-md-4 text-white">
+            <div class="level-indicator d-flex align-items-center">
+              <i class="fas fa-map-marked-alt me-2 text-warning"></i>
+              Level: {{ (stepper?.selectedIndex || 0) + 1 }}/{{ questions.length }}
+            </div>
+          </div>
+        </div>
+        @if(!quizCompleted){
+            <div class="xp-bar bg-dark bg-opacity-25 rounded-pill mt-3" style="height: 6px">
+          <div class="xp-progress h-100 rounded-pill bg-warning"
+               [style.width.%]="((stepper?.selectedIndex || 0) / questions.length) * 100">
+          </div>
+        </div>
+        }
+
+      </div>
+
+      <div class="game-content p-3 p-md-4 bg-primary position-relative">
+
+
+        <mat-horizontal-stepper #stepper linear class="quiz-stepper bg-transparent">
+          @for (question of questions; let i = $index; track trackByQuestionId($index, question)) {
+            <mat-step [stepControl]="answerForms[i]" [completed]="quizCompleted">
+              <ng-template matStepLabel>
+                <div class="step-label d-flex flex-column align-items-center gap-2">
+                  <div class="step-icon rounded-circle d-flex align-items-center justify-content-center"
+                       [class.bg-light]="stepper?.selectedIndex === i"
+                       [class.bg-primary]="stepper?.selectedIndex !== i"
+                       style="width: 40px; height: 40px">
+                    <i class="fas fa-scroll"
+                       [class.text-primary]="stepper?.selectedIndex === i"
+                       [class.text-white]="stepper?.selectedIndex !== i">
+                    </i>
+                  </div>
+                </div>
+              </ng-template>
+
+              <form [formGroup]="answerForms[i]">
+                <div class="quest-card bg-primary rounded-3 shadow-sm p-3 p-md-4 mb-4 position-relative border-start border-4 border-warning">
+
+                  <div class="quest-body mt-3">
+                    <div class="quest-header d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+                      <p class="quest-text fs-5 fw-medium mb-0 text-white">
+                        {{ question.questionText }}
+                      </p>
+                      <div class="quest-score bg-warning text-primary px-3 py-1 rounded-pill small fw-bold d-flex align-items-center">
+                        <span class="fs-6 me-1">{{ question.score }}</span> XP
+                      </div>
+                    </div>
+
+                    <mat-radio-group formControlName="answer"  class="options-container d-flex flex-column gap-2">
+                      @for (option of question.options; track option; let j = $index) {
+                        <mat-radio-button [value]="j + 1"
+                                         class="option-button border rounded-3 p-3 bg-primary bg-opacity-50"
+                                         [class.border-success]="quizCompleted && question.correctAnswer === option"
+                                         [class.border-danger]="quizCompleted && userAnswers[i]?.selectedAnswer?.toString() === option && !userAnswers[i].isCorrect">
+                          <div class="option-content d-flex align-items-center gap-3">
+                            <span class="option-letter bg-warning text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold"
+                                  style="width: 30px; height: 30px">
+                              {{ getOptionLetter(j) }}
+                            </span>
+                            <span class="option-text flex-grow-1 text-white">
+                              {{ option }}
+                            </span>
+                            @if (quizCompleted) {
+                              <span class="answer-feedback">
+                                @if (userAnswers[i]?.selectedAnswer?.toString() === option && !userAnswers[i].isCorrect) {
+                                  <i class="fas fa-times-circle text-danger fs-5"></i>
+                                }
+                                @if (question.correctAnswer === option) {
+                                  <i class="fas fa-check-circle text-success fs-5"></i>
+                                }
+                              </span>
+                            }
+                          </div>
+                        </mat-radio-button>
+                      }
+                    </mat-radio-group>
+
+                    @if (quizCompleted && unansweredIndices.includes(i)) {
+                      <div class="feedback-message unanswered bg-warning bg-opacity-10 text-warning rounded-3 p-3 mt-3 d-flex align-items-center gap-2">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Quest Failed:</strong> You didn't choose an answer!
+                      </div>
+                    }
+
+                    @if (quizCompleted) {
+                      <div class="feedback-message correct-answer bg-success  bg-opacity-10 text-success rounded-3 p-3 mt-3 d-flex align-items-center gap-2">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Correct Answer:</strong> <span class="text-white">{{ question.correctAnswer }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="navigation-buttons d-flex justify-content-between mt-4">
+                  @if (i > 0) {
+                    <button mat-button matStepperPrevious
+                            class="nav-button previous-button border rounded-pill px-4 py-2 bg-light text-primary">
+                      <i class="fas fa-arrow-circle-left me-2"></i> Previous
+                    </button>
+                  } @else {
+                    <div class="empty-space" style="width: 120px"></div>
+                  }
+
+                  <div class="next-button-wrapper">
+                    @if (i < questions.length - 1) {
+                      <button mat-button matStepperNext [disabled]="answerForms[i].invalid"
+                              class="nav-button next-button border-0 rounded-pill px-4 py-2 bg-warning text-primary position-relative">
+                        <span class="button-text position-relative z-1 d-flex align-items-center">
+                          Continue <i class="fas fa-arrow-circle-right ms-2"></i>
+                        </span>
+                      </button>
+                    }
+
+                    @if (i === questions.length - 1) {
+                      <button mat-button (click)="submitQuiz()" [disabled]="answerForms[i].invalid"
+                              class="nav-button submit-button border-0 rounded-pill px-4 py-2 bg-warning text-primary position-relative">
+                        <span class="button-text position-relative z-1 d-flex align-items-center">
+                          <i class="fas fa-flag-checkered me-2"></i> Complete Quest!
+                        </span>
+                      </button>
+                    }
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+          }
+
+          <!-- Results Step -->
+          <mat-step [completed]="quizCompleted">
+            <ng-template matStepLabel>
+              <div class="step-label d-flex flex-column align-items-center gap-2">
+                <div class="step-icon result-step-icon bg-warning rounded-circle d-flex align-items-center justify-content-center"
+                     style="width: 40px; height: 40px">
+                  <i class="fas fa-trophy text-primary"></i>
+                </div>
+                <span class="step-text text-muted small">RESULTS</span>
+              </div>
+            </ng-template>
+
+            <div class="victory-screen bg-primary rounded-3 shadow-sm p-4 p-md-5 text-center mx-auto" style="max-width: 600px">
+              <div class="trophy-icon text-warning mb-4" style="font-size: 4rem">
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <h3 class="fw-bold mb-4 text-white">ADVENTURE COMPLETED!</h3>
+
+              <div class="score-display d-flex justify-content-center align-items-center flex-wrap gap-2 fs-5 mb-4 text-white">
+                <span>You scored</span>
+                <span class="score-value fw-bold fs-2 text-warning">{{ score }}</span>
+                <span>out of</span>
+                <span class="score-value fw-bold fs-2 text-warning">{{ calculateTotalScoreOfExam() }}</span>
+              </div>
+
+              <div class="result-message bg-warning bg-opacity-10 rounded-3 p-3 mb-4 position-relative text-warning">
+                <i class="fas fa-quote-left position-absolute top-0 start-0 opacity-25" style="transform: translate(10px, 5px)"></i>
+                {{ getResultMessage() }}
+                <i class="fas fa-quote-right position-absolute bottom-0 end-0 opacity-25" style="transform: translate(-10px, -5px)"></i>
+              </div>
+
+              <div class="action-buttons d-flex justify-content-center gap-3 flex-wrap">
+                <button mat-button matStepperPrevious class="action-button review-button border-0 rounded-pill px-4 py-2 bg-warning text-primary">
+                  <i class="fas fa-book-open me-2"></i> Review Quests
+                </button>
+
+              </div>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+  </div>
+</div>

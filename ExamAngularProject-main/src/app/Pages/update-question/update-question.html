@@ -1,0 +1,146 @@
+<div class="add-question-container">
+  <div class="form-header">
+    <!-- <button class="back-btn">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="m19 12H5"></path>
+        </svg>
+        Back to Questions
+      </button> -->
+    <h1>Update Question</h1>
+  </div>
+
+  <form
+    class="question-form"
+    [formGroup]="UpdateQuestionForm"
+    (submit)="onFormSubmit()"
+  >
+    <div class="form-section">
+      <h2>Question Details</h2>
+      <hr />
+      <div class="row">
+        <div class="form-group col-lg-10">
+          <label for="title">Question Title *</label>
+          <input
+            formControlName="question"
+            type="text"
+            id="title"
+            name="title"
+            maxlength="200"
+            placeholder="Enter the question title"
+            class="form-input"
+          />
+          @if (getQuestion.touched && getQuestion.hasError('required')) {
+          <span class="error-message m-1">Question Required</span>
+
+          }
+        </div>
+        <!-- //QuestionScore  -->
+        <div class="form-group col-lg-2">
+          <div>
+            <label for="title">Points</label>
+            <input
+              formControlName="score"
+              type="number"
+              id="score"
+              name="score"
+              placeholder="1"
+              class="form-input"
+            />
+          </div>
+          @if (getScore.touched && (getScore.hasError('min') ||
+          getScore.hasError('max'))) {
+          <span class="text-danger">Points 1 : 20</span>
+
+          }
+        </div>
+      </div>
+      <!-- <div class="form-row">
+          <div class="form-group">
+            <label for="difficulty">Difficulty Level *</label>
+            <select
+              id="difficulty"
+              name="difficulty"
+              required
+              class="form-select"
+            >
+              <option value="">Select difficulty</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+            <div class="error-message">difficultyError</div>
+          </div>
+  
+          <div class="form-group">
+            <label for="category">Category *</label>
+            <input
+              type="text"
+              id="category"
+              name="category"
+              required
+              maxlength="50"
+              placeholder="e.g., Angular Basics, RxJS, etc."
+              class="form-input"
+            />
+            <div class="error-message">Error</div>
+          </div>
+        </div> -->
+    </div>
+
+    <div class="form-section">
+      <h2>Answer Options</h2>
+      <p class="section-description">
+        Provide 4 answer options and select the correct one
+      </p>
+
+      <div class="options-container">
+        @for (item of options; track $index) {
+
+        <div class="option-group">
+          <div class="option-header">
+            <label class="option-label">Option {{item.label}}</label>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="correctOption"
+                formControlName="correctOption"
+                [value]="$index + 1"
+                class="radio-input"
+              />
+              <span class="radio-custom"></span>
+              Correct Answer
+            </label>
+          </div>
+
+          <input
+            [formControlName]="item.option"
+            type="text"
+            maxlength="200"
+            placeholder="Enter option"
+            class="option-input"
+          />
+
+          <div class="option-char-count">200</div>
+          @if(getOption(item.option).hasError('required') &&
+          getOption(item.option).touched) {
+          <div class="error-message">Option A is required</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" (click)="goBack()">
+        Cancel
+      </button>
+      <button type="submit" class="submit-btn">Update</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,108 @@
+<div class="container exam-details-container py-4">
+  @if (examDetails) {
+    <div class="exam-card shadow-lg rounded-4 overflow-hidden">
+      <!-- Exam Header -->
+      <div class="exam-header" [ngClass]="{'bg-passed': examDetails.isPassed, 'bg-failed': !examDetails.isPassed}">
+        <div class="d-flex justify-content-between align-items-center">
+          <button class="btn back-btn" (click)="goBack()">
+            <i class="bi bi-chevron-left"></i> Back
+          </button>
+         <span class="badge" [ngClass]="examDetails.isPassed ? 'bg-success' : 'bg-danger'">
+  {{ examDetails.isPassed ? 'Passed' : 'Failed' }}
+</span>
+
+        </div>
+
+        <h1 class="exam-title text-center my-3">{{ examDetails.examName }}</h1>
+
+        <div class="score-summary text-center">
+          <div class="display-4 fw-bold">{{ examDetails.totalScore }}
+            <span class="text-light fs-2">/ {{ examDetails.maxMarks }}</span>
+          </div>
+          <div class="progress my-3 mx-auto" style="height: 8px; max-width: 300px;">
+            <div class="progress-bar "
+                 [ngClass]="{'bg-passed': examDetails.isPassed, 'bg-failed': !examDetails.isPassed}"
+                 [style.width]="(examDetails.totalScore / examDetails.maxMarks * 100) + '%'">
+            </div>
+          </div>
+          <div class="percentage-badge">
+            {{ (examDetails.totalScore / examDetails.maxMarks * 100).toFixed(1) }}%
+          </div>
+        </div>
+      </div>
+      <div class="exam-body p-4">
+        @if (examDetails.questions.length > 0) {
+          <h3 class="section-title mb-4">
+            <i class="bi bi-question-circle me-2"></i>Question Breakdown
+          </h3>
+
+          <div class="accordion question-accordion" id="examQuestions">
+            @for (question of examDetails.questions; track question.id; let i = $index) {
+              <div class="accordion-item mb-3 border-0 rounded-3 overflow-hidden">
+                <h2 class="accordion-header" id="heading{{ i }}">
+                  <button class="accordion-button collapsed py-3" type="button"
+                    data-bs-toggle="collapse" attr.data-bs-target="#collapse{{ i }}"
+                    aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+                    <span class="question-number me-2">{{ i + 1 }}.</span>
+                    <span class="question-text">{{ question.questionText }}</span>
+                    <span class="ms-auto question-score"
+                          [ngClass]="{'text-passed': question.isCorrect, 'text-failed': !question.isCorrect}">
+                      {{ question.answerScore }} / {{ question.score }}
+                    </span>
+                  </button>
+                </h2>
+
+                <div id="collapse{{ i }}" class="accordion-collapse collapse"
+                  [attr.aria-labelledby]="'heading' + i" data-bs-parent="#examQuestions">
+                  <div class="accordion-body pt-3 pb-4">
+                    <div class="choices-container mb-4">
+                      <h6 class="choices-title mb-3">Options:</h6>
+                      <div class="row g-2">
+                        <div class="col-md-6" *ngFor="let choice of [question.choice1, question.choice2, question.choice3, question.choice4]; let j = index">
+                          <div class="choice-card p-3 rounded-2"
+                               [ngClass]="{
+                                 'correct-choice': j+1 == question.correctAnswer,
+                                 'incorrect-choice': !question.isCorrect
+                               }">
+                            <span class="choice-number me-2">{{ j + 1 }}.</span>
+                            {{ choice }}
+                            @if (j+1 == question.correctAnswer) {
+                              <i class="bi bi-check-circle-fill  ms-2 correct-icon"></i>
+                            }
+                            @if (!question.isCorrect ) {
+                              <i class="bi bi-x-circle-fill ms-2 text-danger incorrect-icon"></i>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                      <div class="col-md-6">
+                        <div class="stat-card p-3 rounded-2">
+                          <div class="stat-label">Correct Answer: Option {{ question.correctAnswer }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state text-center py-5">
+            <i class="bi bi-question-lg text-muted fs-1"></i>
+            <p class="text-muted mt-3">No questions found in this exam</p>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="loading-state text-center py-5">
+      <div class="spinner-border text-primary spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <h4 class="mt-4">Loading Exam Details</h4>
+      <p class="text-muted">Please wait while we retrieve your exam results</p>
+    </div>
+  }
+</div>

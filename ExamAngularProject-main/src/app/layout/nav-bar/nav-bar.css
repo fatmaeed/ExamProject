@@ -1,0 +1,51 @@
+ .nav-item {
+    color: black;
+    padding-left: 0%;
+    font-weight: 600;
+  }
+
+  .nav-item:hover {
+    color: #1D4645;
+  }
+
+  .btn {
+    border-color: #1D4645;
+    color: #1D4645;
+  }
+
+  .btn:hover {
+    background-color: #1D4645;
+    color: white;
+  }
+
+  /* Enhancement styles */
+  .transition-ease {
+    transition: all 0.3s ease;
+  }
+
+  .hover-line {
+    width: 0;
+    height: 2px;
+    background-color: #1D4645;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover .hover-line {
+    width: 70%;
+  }
+
+  .dropdown-item:hover {
+    background-color: rgba(29, 70, 69, 0.1);
+  }
+
+  .shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.95);
+  }

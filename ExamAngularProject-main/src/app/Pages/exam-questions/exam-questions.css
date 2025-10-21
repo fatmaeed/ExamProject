@@ -1,0 +1,132 @@
+.exam-questions-container {
+  max-width: 1200px;
+  margin: 0 ;
+}
+
+.exam-header {
+  padding: 2rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  background: linear-gradient(220deg, #163635 0%, #163635 60%, #E8C5B0 100%);
+  .exam-header .text-muted {
+  color: #ffffff !important;
+}
+
+
+}
+
+.exam-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.exam-dates {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.btn-add-question {
+  background-color: #1D4645;
+  border-color: #1D4645;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-add-question:hover {
+  background-color: #163635;
+  border-color: #163635;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(29, 70, 69, 0.2);
+}
+
+.stats-row {
+  margin: 0 -10px;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.05); /* slight white tint for contrast */
+  color: #fff; /* force text inside to be white */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+    color: #fff;
+
+}
+
+
+
+
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Color Classes */
+.text-primary {
+  color: #1D4645 !important;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.bg-primary {
+  background-color: #1D4645 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .exam-title {
+    font-size: 1.5rem;
+  }
+
+  .exam-dates {
+    font-size: 0.9rem;
+  }
+
+  .btn-add-question {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-row {
+    margin: 0 -5px;
+  }
+
+  .stat-card {
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,48 @@
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    margin: 8px;
+    border-radius: 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.option-item:last-child {
+    margin-bottom: 0;
+}
+
+.correct-option {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #065f46;
+}
+
+.option-label {
+    font-weight: 600;
+    color: #374151;
+    min-width: 20px;
+}
+
+.correct-option .option-label {
+    color: #065f46;
+}
+
+.option-text {
+    flex: 1;
+    line-height: 1.4;
+}
+
+.correct-indicator {
+    color: #10b981;
+    display: flex;
+    align-items: center;
+}
+
+.correct-indicator svg {
+    width: 16px;
+    height: 16px;
+}

@@ -1,0 +1,33 @@
+<div class="question-card-container">
+  <div class="question-card">
+    <div class="card-header">
+      <span class="question-number">{{index}}.</span>
+      <h3 class="question-title">{{questionModel.questionText}}</h3>
+    </div>
+
+    <div class="card-body">
+      <div class="options-grid">
+        @for (item of options; track $index) {
+        <app-option-card [optionModel]="item"></app-option-card>
+        }
+      </div>
+
+      <div class="card-footer">
+        <div class="question-meta">
+          <span class="meta-item points-badge">
+            <i class="fas fa-star"></i> {{questionModel.score}} Points
+          </span>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-edit" [routerLink]="['update', questionModel.id]">
+            <i class="fas fa-pencil-alt"></i> Edit
+          </button>
+          <button class="btn btn-delete" (click)="confirmDelete()">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

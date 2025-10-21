@@ -1,0 +1,132 @@
+/* Card Container */
+.question-card-container {
+  perspective: 1000px;
+}
+
+.question-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(29, 70, 69, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(232, 197, 176, 0.3);
+}
+
+.question-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(29, 70, 69, 0.15);
+}
+
+/* Card Header */
+.card-header {
+  background: linear-gradient(135deg, #1D4645 0%, #2a5d5b 100%);
+  padding: 1.25rem 1.5rem;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.question-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #E8C5B0;
+}
+
+.question-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* Card Body */
+.card-body {
+  padding: 1.5rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card Footer */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #E8C5B0;
+}
+
+.points-badge {
+  background: rgba(232, 197, 176, 0.2);
+  color: #1D4645;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.points-badge i {
+  color: #E8C5B0;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-edit {
+  background: rgba(29, 70, 69, 0.1);
+  color: #1D4645;
+}
+
+.btn-edit:hover {
+  background: rgba(29, 70, 69, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-delete {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.btn-delete:hover {
+  background: rgba(220, 53, 69, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-card {
+  animation: fadeIn 0.5s ease forwards;
+}

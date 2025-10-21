@@ -1,0 +1,118 @@
+  <div class="container add-question-container ">
+    <div class="form-header text-center mb-5 gradient-bg">
+      <h1 class="form-title mb-3">Add New MCQ Question</h1>
+      <div class="header-divider mx-auto"></div>
+      <p class="form-subtitle">Create a new multiple choice question for your exam</p>
+    </div>
+
+    <form class="question-form" [formGroup]="createQuestionForm" (submit)="onFormSubmit()">
+      <div class="card form-section mb-4 border-0">
+        <div class="card-body p-4">
+          <div class="section-header d-flex align-items-center mb-3">
+            <div class="section-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <h2 class="section-title mb-0">Question Details</h2>
+          </div>
+          <hr class="section-divider">
+
+          <div class="row">
+            <div class="col-lg-10 mb-4">
+              <label for="title" class="form-label">Question Title *</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-heading"></i>
+                </span>
+                <input formControlName="question" type="text" id="title" name="title" maxlength="200"
+                       placeholder="Enter the question title" class="form-control">
+              </div>
+              @if (getQuestion.touched && getQuestion.hasError('required')) {
+              <div class="invalid-feedback d-block mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>Question is required
+              </div>
+              }
+            </div>
+
+            <div class="col-lg-2 mb-4">
+              <label for="score" class="form-label">Points *</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-star"></i>
+                </span>
+                <input formControlName="score" type="number" id="score" name="score" placeholder="1"
+                       class="form-control">
+              </div>
+              @if (getScore.touched && (getScore.hasError('min') || getScore.hasError('max'))) {
+              <div class="invalid-feedback d-block mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>Points must be 1-20
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card form-section mb-4 border-0">
+        <div class="card-body p-4">
+          <div class="section-header d-flex align-items-center mb-3">
+            <div class="section-icon">
+              <i class="fas fa-list-ol"></i>
+            </div>
+            <h2 class="section-title mb-0">Answer Options</h2>
+          </div>
+          <p class="section-description">
+            Provide 4 answer options and select the correct one
+          </p>
+
+          <div class="options-container">
+            @for (item of options; track $index) {
+            <div class="option-card mb-3 p-3">
+              <div class="option-header d-flex justify-content-between align-items-center mb-2">
+                <label class="option-label">
+                  <span class="option-letter">{{item.label}}</span>
+                </label>
+                <div class="form-check correct-answer-selector">
+                  <input type="radio" name="correctOption" formControlName="correctOption"
+                         [value]="$index + 1" class="form-check-input" id="correctOption{{$index}}">
+                  <label class="form-check-label" for="correctOption{{$index}}">
+                    <i class="fas fa-check-circle"></i> Correct
+                  </label>
+                </div>
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-pen"></i>
+                </span>
+                <input [formControlName]="item.option" type="text" maxlength="200"
+                       placeholder="Enter option text" class="form-control">
+              </div>
+
+              <div class="d-flex justify-content-between mt-2">
+                @if(getOption(item.option).hasError('required') && getOption(item.option).touched) {
+                <div class="invalid-feedback d-block">
+                  <i class="fas fa-exclamation-circle me-1"></i>Option is required
+                </div>
+                } @else {
+                <div></div>
+                }
+                <small class="text-muted text-end">
+                  {{200 - (getOption(item.option).value?.length || 0)}} characters remaining
+                </small>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions d-flex justify-content-end gap-3 mt-4">
+        <button type="button" class="btn btn-lg cancel-btn" (click)="goBack()">
+          <i class="fas fa-arrow-left me-2"></i>Cancel
+        </button>
+        <button type="submit" class="btn btn-lg submit-btn">
+          <i class="fas fa-save me-2"></i>Create Question
+        </button>
+      </div>
+    </form>
+  </div>

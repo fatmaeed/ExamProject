@@ -1,0 +1,21 @@
+@if(quizzes != undefined){
+  <div class="container py-5 quizzs">
+  <div class="d-flex justify-content-between align-items-center flex-wrap mb-5">
+    <h2 class="fw-bold mb-0 title display-5">Discover Amazing Quizzes</h2>
+    <button class="btn btn-gradient-primary fw-semibold px-4 py-2 mt-3 mt-md-0" (click)="navigateToAllQuizzes()">
+      EXPLORE ALL <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+  </div>
+
+  <div class="row g-4">
+    @for (quiz of quizzes  | slice:0:6; track $index) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <app-quiz-card
+          [quiz]="quiz"
+
+        />
+      </div>
+    }
+  </div>
+</div>
+}
